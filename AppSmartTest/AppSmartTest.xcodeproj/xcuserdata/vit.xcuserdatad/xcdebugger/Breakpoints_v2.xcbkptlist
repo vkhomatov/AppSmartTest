@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "BBAAA52F-9456-44CE-B9FD-52A4C66C5084"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F11E8FEA-2519-47AC-8E97-31B858AC8E91"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppSmartTest/Flows/Characters/CharactersCollectionViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "updateSearchResults(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D799A1AE-4D46-41DB-B5A5-76B4EA939AEC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppSmartTest/Flows/Characters/CharactersCollectionViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "updateSearchResults(for:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D799A1AE-4D46-41DB-B5A5-76B4EA939AEC - 11a9a2ec5f5e22e3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AppSmartTest.CharactersCollectionViewController.updateSearchResults(for: __C.UISearchController) -&gt; ()"
+                  moduleName = "AppSmartTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/Tests/AppSmartTest/AppSmartTest/AppSmartTest/Flows/Characters/CharactersCollectionViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "154"
+                  endingLineNumber = "154"
+                  offsetFromSymbolStart = "4490">
+               </Location>
+               <Location
+                  uuid = "D799A1AE-4D46-41DB-B5A5-76B4EA939AEC - 14ae6cbbe72c40c6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (AppSmartTest.Character) -&gt; Swift.Bool in AppSmartTest.CharactersCollectionViewController.updateSearchResults(for: __C.UISearchController) -&gt; ()"
+                  moduleName = "AppSmartTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/Tests/AppSmartTest/AppSmartTest/AppSmartTest/Flows/Characters/CharactersCollectionViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "154"
+                  endingLineNumber = "154"
+                  offsetFromSymbolStart = "120">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
