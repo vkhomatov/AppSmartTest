@@ -47,7 +47,7 @@ class NetworkService {
 
     
     
-    func getResponse(limit: Int, offset: Int, completion: @escaping (Swift.Result<MarvellResponse, Error>?) -> Void)  {
+/*    func getResponse(limit: Int, offset: Int, completion: @escaping (Swift.Result<MarvellResponse, Error>?) -> Void)  {
 
         urlConstructor.path = "/v1/public/characters"
 //        urlConstructor.queryItems = [
@@ -118,10 +118,10 @@ class NetworkService {
         }
 
      
-    }
+    } */
     
     
-    func getCharactersSJ(limit: Int, offset: Int, completion: ((Swift.Result<[CharacterSJ], Error>) -> Void)? = nil) {
+    func getCharactersSJ(limit: Int, offset: Int, completion: ((Swift.Result<ResponceSJ, Error>) -> Void)? = nil) {
         
         urlConstructor.path = "/v1/public/characters"
 
@@ -145,16 +145,20 @@ class NetworkService {
                 let json = JSON(data)
                 
                 //print(json)
+                
+                let response = ResponceSJ(from: json)
+                  completion?(.success(response))
+
+                
+
             
 
-               let charactersJSONs = json["data"]["results"].arrayValue
-                
-         //       if let responseJSONs = json["data"].rawValue as? ResponceSJ {
-                 let characters = charactersJSONs.map { CharacterSJ(from: $0) }
-                  completion?(.success(characters))
-                
-            //    print(characters[0])
-           //     }
+//               let charactersJSONs = json["data"]["results"].arrayValue
+//
+//                 let characters = charactersJSONs.map { CharacterSJ(from: $0) }
+//                  completion?(.success(characters))
+//
+    
                 
 
             case let .failure(error):
@@ -167,7 +171,7 @@ class NetworkService {
     }
     
     
-    func getCharacterAnyStorySJ(id: Int, storyType: String, limit: Int, offset: Int, completion: ((Swift.Result<[AnyStorySJ], Error>) -> Void)? = nil) {
+    func getCharacterAnyStorySJ(id: Int, storyType: String, limit: Int, offset: Int, completion: ((Swift.Result<ResponceComicSJ, Error>) -> Void)? = nil) {
         
         urlConstructor.path = "/v1/public/characters"+"/"+String(id)+"/"+storyType
 
@@ -198,12 +202,13 @@ class NetworkService {
 //                    print(json)
 //                }
 
-            
+                let response = ResponceComicSJ(from: json)
+                  completion?(.success(response))
 
-               let storyJSONs = json["data"]["results"].arrayValue
-
-                 let stories = storyJSONs.map { AnyStorySJ(from: $0) }
-                  completion?(.success(stories))
+//               let storyJSONs = json["data"]["results"].arrayValue
+//
+//                 let stories = storyJSONs.map { AnyStorySJ(from: $0) }
+//                  completion?(.success(stories))
                 
          
                 

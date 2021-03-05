@@ -12,36 +12,16 @@ import RealmSwift
 class CharacterDetailViewModel {
     
     let networkService = NetworkService()
-    //var characters = [Character]()
-   // var searchCharacters = [Character]()
     
     var loadStorySJ = [AnyStorySJ]()
 
     var characterSJ: CharacterSJ?
 
-    
-//    
-//    init() {
-//        
-//        
-//        
-//    }
-    
-   // var storyArray = [[AnyStorySJ]]()
-//    var comicsSJ = [AnyStorySJ]()
-//    var eventsSJ = [AnyStorySJ]()
-//    var seriesSJ = [AnyStorySJ]()
-//    var storiesSJ = [AnyStorySJ]()
-//
-//
-//    var loadStorySJ = [AnyStorySJ]()
-   // var searchCharactersSJ = [CharacterSJ]()
 
     var isLoading: Bool = false
     
     var activity: TypeOfPActivity = .comics
 
- //   var search: Bool = false
     
 //    func loadCharacters(limit: Int, offset: Int, completion: @escaping (String?) -> ()) {
 //        self.isLoading = true
@@ -84,32 +64,32 @@ class CharacterDetailViewModel {
             case let .success(data):
                 
         
-//                guard data.code == 200 else {
-//                    completion("Error Return Code: \(String(describing: data.code))")
-//                    print("Error Return Code: \(String(describing: data.code))")
-//                    return
-//                }
-//
-//                guard let characters = data.data?.results  else {
-//                    completion("No data returned")
-//                    print("No data returned")
-//                    return
-//                }
+                guard data.code == 200 else {
+                    completion("Error Return Code: \(String(describing: data.code))")
+                    print("Error Return Code: \(String(describing: data.code))")
+                    return
+                }
+
+                guard let stories = data.data?.results else {
+                    completion("No data returned")
+                    print("No data returned")
+                    return
+                }
                 
                 guard let characterSJ = self.characterSJ else { return }
 //
                 switch storyType {
                 case "comics":
-                    characterSJ.comicsSJ.append(contentsOf: data)
+                    characterSJ.comicsSJ.append(contentsOf: stories)//.append(contentsOf: characters)
                     self.loadStorySJ = characterSJ.comicsSJ
                 case "events":
-                    characterSJ.eventsSJ.append(contentsOf: data)
+                    characterSJ.eventsSJ.append(contentsOf: stories)
                     self.loadStorySJ = characterSJ.eventsSJ
                 case "series":
-                    characterSJ.seriesSJ.append(contentsOf: data)
+                    characterSJ.seriesSJ.append(contentsOf: stories)
                     self.loadStorySJ = characterSJ.seriesSJ
                 case "stories":
-                    characterSJ.storiesSJ.append(contentsOf: data)
+                    characterSJ.storiesSJ.append(contentsOf: stories)
                     self.loadStorySJ = characterSJ.storiesSJ
                 default:
                     break
@@ -140,8 +120,6 @@ enum TypeOfPActivity: String, CaseIterable {
     func getIndex(num: Int)  -> TypeOfPActivity  {
         switch num {
         case 0:
-           // loadStorySJ = comicsSJ
-
             return TypeOfPActivity.comics
         case 1:
             return TypeOfPActivity.events

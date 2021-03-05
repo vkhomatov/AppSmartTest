@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftyJSON
+import RealmSwift
 
 
 class ResponceComicSJ {
@@ -16,13 +17,7 @@ class ResponceComicSJ {
     var attributionText: String?
     var attributionHTML: String?
     var etag: String?
-    //  var data: DataSJ?
-    
-    var dataOffset: Int?
-    var dataLimit: Int?
-    var dataTotal: Int?
-    var dataCount: Int?
-    var dataResults: [CharacterSJ]?
+    var data: DataComicSJ?
     
     convenience init(from json: JSON) {
         self.init()
@@ -32,20 +27,8 @@ class ResponceComicSJ {
         self.copyright = json["copyright"].stringValue
         self.attributionText = json["attributionText"].stringValue
         self.attributionHTML = json["attributionHTML"].stringValue
-        //   self.data = json["data"].rawValue as? DataSJ
+        self.data = DataComicSJ(from: json["data"])
         self.etag = json["etag"].stringValue
-        
-        self.dataOffset = json["data"]["offset"].intValue
-        self.dataLimit = json["data"]["limit"].intValue
-        self.dataTotal = json["data"]["total"].intValue
-        self.dataCount = json["data"]["count"].intValue
-        
-        let dataResultsJSONs = json["data"]["results"].arrayValue
-        self.dataResults = dataResultsJSONs.map { CharacterSJ(from: $0) }
-        
-        
-        //        let dataJSONs = json["data"].arrayValue
-        //        self.data = dataJSONs.map { DataSJ (from: $0) }
         
     }
     
@@ -56,7 +39,7 @@ class DataComicSJ {
     var limit: Int?
     var total: Int?
     var count: Int?
-    var results: [CharacterSJ]?
+    var results: [AnyStorySJ]?
     
     convenience init(from json: JSON) {
         self.init()
@@ -67,38 +50,39 @@ class DataComicSJ {
         self.count = json["count"].intValue
         
         let resultsJSONs = json["results"].arrayValue
-        self.results = resultsJSONs.map { CharacterSJ (from: $0) }
+        self.results = resultsJSONs.map { AnyStorySJ (from: $0) }
         
     }
 }
 
 
-class AnyStorySJ {
+class AnyStorySJ: Object {
     
-    var id: Int?
-    var title: String?
-    var description: String?
-    //  var thumbnail: ImageSJ?
+    @objc dynamic var id: Int = 0
+    @objc dynamic var title: String?
+    @objc dynamic var descriptionSJ: String?
     
     
     var fileExtension: String?
     var path: String?
     
-    var url: URL? {
-        return URL(string: securePath(path: self.path) + "." + self.fileExtension!)
+    @objc dynamic var url: URL? {
+        if self.fileExtension != "" && self.path != "" {
+            if let fileExtension = self.fileExtension {
+            return URL(string: securePath(path: path) + "." + fileExtension)
+            }
+        }
+        return nil
     }
     
     convenience init(from json: JSON) {
         self.init()
         self.id = json["id"].intValue
         self.title = json["title"].stringValue
-        self.description = json["description"].stringValue
-        // self.thumbnail = json["thumbnail"].rawValue as? ImageSJ
-        
+        self.descriptionSJ = json["description"].stringValue        
         self.fileExtension = json["thumbnail"]["extension"].stringValue
         self.path = json["thumbnail"]["path"].stringValue
-        
-        
+    
     }
     
     func securePath(path: String?) -> String {
@@ -114,24 +98,11 @@ class AnyStorySJ {
         
         
     }
+    
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 
-
-//class StoriSJ {
-//
-//    var id: Int?
-//    var title: String?
-//    var description: String?
-//    var thumbnail: ImageSJ?
-//
-//    convenience init(from json: JSON) {
-//        self.init()
-//        self.id = json["id"].intValue
-//        self.title = json["title"].stringValue
-//        self.description = json["description"].stringValue
-//        self.thumbnail = json["thumbnail"].rawValue as? ImageSJ
-//
-//    }
-//
-//}
 
