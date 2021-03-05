@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import CryptoSwift
+import SwiftyJSON
 
 
 // сетевая сессия
@@ -111,12 +112,109 @@ class NetworkService {
 
             case let .failure(error):
                 completion(.failure(error))
-                print(#function + "ОШИБКА ЗАГРУЗКИ ДАННЫХ \(error)")
+                print(#function + " - ОШИБКА ЗАГРУЗКИ ДАННЫХ \(error)")
                 
             }
         }
 
      
+    }
+    
+    
+    func getCharactersSJ(limit: Int, offset: Int, completion: ((Swift.Result<[CharacterSJ], Error>) -> Void)? = nil) {
+        
+        urlConstructor.path = "/v1/public/characters"
+
+        
+        let ts = Date().timeIntervalSince1970.description
+        
+        let params: Parameters = [
+            "apikey": SessionKey.shared.publicKey,
+            "ts": ts,
+            "hash": (ts + SessionKey.shared.privateKey + SessionKey.shared.publicKey).md5(),
+            "orderBy": "-modified",
+            "limit" : limit,
+            "offset" : offset
+        ]
+        
+        guard let url = urlConstructor.url else { return }
+        
+        NetworkService.session.request(url, method: .get, parameters: params).responseJSON { response in
+            switch response.result {
+            case let .success(data):
+                let json = JSON(data)
+                
+                //print(json)
+            
+
+               let charactersJSONs = json["data"]["results"].arrayValue
+                
+         //       if let responseJSONs = json["data"].rawValue as? ResponceSJ {
+                 let characters = charactersJSONs.map { CharacterSJ(from: $0) }
+                  completion?(.success(characters))
+                
+            //    print(characters[0])
+           //     }
+                
+
+            case let .failure(error):
+                completion?(.failure(error))
+                print(#function + " - ОШИБКА ЗАГРУЗКИ ДАННЫХ \(error)")
+
+            }
+        }
+        
+    }
+    
+    
+    func getCharacterAnyStorySJ(id: Int, storyType: String, limit: Int, offset: Int, completion: ((Swift.Result<[AnyStorySJ], Error>) -> Void)? = nil) {
+        
+        urlConstructor.path = "/v1/public/characters"+"/"+String(id)+"/"+storyType
+
+        
+        let ts = Date().timeIntervalSince1970.description
+        
+        let params: Parameters = [
+            "apikey": SessionKey.shared.publicKey,
+            "ts": ts,
+            "hash": (ts + SessionKey.shared.privateKey + SessionKey.shared.publicKey).md5(),
+            "orderBy": "-modified",
+            "limit" : limit,
+            "offset" : offset
+        ]
+        
+        guard let url = urlConstructor.url else { return }
+        
+        NetworkService.session.request(url, method: .get, parameters: params).responseJSON { response in
+            switch response.result {
+            case let .success(data):
+                let json = JSON(data)
+                
+              //  print(json)
+            
+                
+//                if let responseJSONs = json.rawValue as? ResponceComicSJ {
+//                    completion?(.success(responseJSONs))
+//                    print(json)
+//                }
+
+            
+
+               let storyJSONs = json["data"]["results"].arrayValue
+
+                 let stories = storyJSONs.map { AnyStorySJ(from: $0) }
+                  completion?(.success(stories))
+                
+         
+                
+
+            case let .failure(error):
+                completion?(.failure(error))
+                print(#function + " - ОШИБКА ЗАГРУЗКИ ДАННЫХ \(error)")
+                
+            }
+        }
+        
     }
     
 }

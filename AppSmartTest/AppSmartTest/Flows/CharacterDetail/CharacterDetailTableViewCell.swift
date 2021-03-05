@@ -47,7 +47,7 @@ class CharacterDetailTableViewCell: UITableViewCell {
       //  name.font = name.font.withSize(18.0)
         titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
         titleLabel.textColor = UIColor.white
-        titleLabel.numberOfLines = 2
+        titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
       //  titleLabel.text = "Жопер-мэн"
 
@@ -62,9 +62,10 @@ class CharacterDetailTableViewCell: UITableViewCell {
         
         thumbnailImageView.contentMode = .scaleAspectFill
         thumbnailImageView.translatesAutoresizingMaskIntoConstraints = false
-
         thumbnailImageView.layer.cornerRadius = 10
         thumbnailImageView.backgroundColor = .lightGray
+        thumbnailImageView.clipsToBounds = true
+
 
         contentView.addSubview(titleLabel)
         contentView.addSubview(thumbnailImageView)

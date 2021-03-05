@@ -31,14 +31,16 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
         setupSearchBar()
 
         
-       DispatchQueue.main.async {
-        
+        DispatchQueue.main.async { [self] in
+            self.model.isLoading = true
+
+            
         self.spinner = SpinnerView(frame: CGRect(x: 0, y: 0, width: 110, height: 50))
         self.spinner.center = self.view.center
-        self.collectionView.addSubview(self.spinner)
+        self.view.addSubview(self.spinner)
         self.spinner.start()
         
-            self.model.loadCharacters(limit: 10, offset: 0) { [weak self] (message) in
+           /* self.model.loadCharacters(limit: 10, offset: 0) { [weak self] (message) in
                 guard let self = self else { return }
                 if let error = message {
                     DispatchQueue.main.async {
@@ -55,7 +57,36 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
                         
                     }
                 }
-            }
+            } */
+        
+      
+        
+             self.model.loadCharactersSJ(limit: 10, offset: 0) { [weak self] (message) in
+                 guard let self = self else { return }
+                 if let error = message {
+                     DispatchQueue.main.async {
+                         print(error)
+                        self.model.isLoading = false
+                         //let errorMessage = ErrorMessage(view: self.view)
+                         //errorMessage.showError(reverse: true, message: error, delay: 3.0)
+                     }
+                 } else {
+                     DispatchQueue.main.async { [weak self] in
+                         guard let self = self else { return }
+//                        for character in self.model.charactersSJ {
+//                            print(character.thumbnail?.url)
+//                    }
+                         self.collectionView.reloadData()
+                         self.spinner.removeFromSuperview()
+                         self.spinner.stop()
+                        self.model.isLoading = false
+
+                     }
+                 }
+             }
+         
+        
+           
        }
     }
     
@@ -82,10 +113,12 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
         self.navigationItem.searchController = self.searchController
         self.searchController.searchResultsUpdater = self
         self.searchController.searchBar.delegate = self
-        //  self.definesPresentationContext = true
-        self.navigationItem.hidesSearchBarWhenScrolling = false
+         // self.definesPresentationContext = true
+        self.navigationItem.hidesSearchBarWhenScrolling = true
         self.searchController.obscuresBackgroundDuringPresentation = false
-        
+
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.definesPresentationContext = false
         
        // navigationController?.navigationBar.barStyle = .black
     //    navigationController?.navigationBar.isTranslucent = true
@@ -104,7 +137,6 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
 
         // Add the search controller to the nav item
       //  navigationItem.searchController = searchController
-        self.navigationItem.searchController = self.searchController
 
    //     definesPresentationContext = true
 
@@ -122,11 +154,39 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
     }
     
     
+//    override func viewDidAppear(_ animated: Bool) {
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//
+//    }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        
+//        
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationItem.largeTitleDisplayMode =  .automatic
+//
+//
+//
+//     //   navigationController?.navigationBar.setNeedsDisplay()
+//    }
+    
     private func setupNavBar() {
         
-        navigationController?.navigationBar.prefersLargeTitles = true
+        if #available(iOS 13.0, *) {
+           navigationController?.navigationBar.prefersLargeTitles = true
+            navigationItem.largeTitleDisplayMode =  .automatic
+            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
+            navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
+
+        } else {
+            navigationItem.largeTitleDisplayMode = .never
+            navigationController?.navigationBar.isTranslucent = false
+            navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
+        }
         self.navigationItem.title = "Marvell Heroes"
-        
+
+
+
        // let backBarButtton = UIBarButtonItem(title: "", style: .done, target: nil, action: nil)
        // navigationItem.backBarButtonItem = backBarButtton
         
@@ -144,10 +204,14 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
         if let searchField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
             if let text = searchField.text {
                 
-              //  let names = text.split { str in str == " " }
                 
-                model.searchCharacters =  model.characters.filter( { $0.name?.prefix(text.count).description == text } )
+             //   model.searchCharacters =  model.characters.filter( { $0.name?.prefix(text.count).description == text } )
+                model.searchCharactersSJ =  model.charactersSJ.filter( { $0.name?.prefix(text.count).description == text } )
+
                 
+                
+                //  let names = text.split { str in str == " " }
+
 //                for character in model.characters {
 //                    if let names = character.names {
 //                    if names.count >= 2 {
@@ -192,9 +256,9 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if model.search {
-            return model.searchCharacters.count
+            return model.searchCharactersSJ.count
         }  else {
-            return model.characters.count
+            return model.charactersSJ.count
         }
         
     }
@@ -202,18 +266,28 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "characterCell", for: indexPath) as? CharacterCollectionViewCell else { return UICollectionViewCell() }
         
-        if indexPath.row < model.characters.count {
+        if indexPath.row < model.charactersSJ.count {
             
             if model.search {
                 
-                cell.name.text = model.searchCharacters[indexPath.row].name
-                cell.info.text = model.searchCharacters[indexPath.row].characterDescription
-                cell.avatar.kf.setImage(with: model.searchCharacters[indexPath.row].thumbnail?.url)
-            }  else {
+                cell.name.text = model.searchCharactersSJ[indexPath.row].name
+                cell.info.text = model.searchCharactersSJ[indexPath.row].description
             
-            cell.name.text = model.characters[indexPath.row].name
-            cell.info.text = model.characters[indexPath.row].characterDescription
-            cell.avatar.kf.setImage(with: model.characters[indexPath.row].thumbnail?.url)
+                if model.searchCharactersSJ[indexPath.row].url != URL(string: ".") {
+                    cell.avatar.kf.setImage(with: model.searchCharactersSJ[indexPath.row].url)
+                } else {
+                    cell.avatar.image = UIImage(named: "noimage")
+                }
+            }  else {
+                
+                cell.name.text = model.charactersSJ[indexPath.row].name
+                cell.info.text = model.charactersSJ[indexPath.row].description
+                
+                if model.charactersSJ[indexPath.row].url != URL(string: ".") {
+                    cell.avatar.kf.setImage(with: model.charactersSJ[indexPath.row].url)
+                } else {
+                    cell.avatar.image = UIImage(named: "noimage")
+                }
             }
         }
         
@@ -244,11 +318,13 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
         let viewController = CharacterDetailViewController()
         
         if model.search {
-            viewController.character = self.model.searchCharacters[indexPath.row]
+            viewController.model.characterSJ = self.model.searchCharactersSJ[indexPath.row]
 
         }  else {
-            viewController.character = self.model.characters[indexPath.row]
+            viewController.model.characterSJ = self.model.charactersSJ[indexPath.row]
         }
+        
+      //  viewController.model = self.model
         
         navigationController?.pushViewController(viewController, animated: true)
     }
@@ -256,16 +332,20 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     
-        if indexPath.row + 1 == model.characters.count {
+        if indexPath.row + 1 == model.charactersSJ.count {
                 if self.model.isLoading == false {
                 
+                    DispatchQueue.main.async { [self] in
+
+                    self.model.isLoading = true
+
                     self.spinner = SpinnerView(frame: CGRect(x: 0, y: 0, width: 110, height: 50))
                     self.spinner.center = self.collectionView.center
                     self.collectionView.layer.opacity = 0.3
                     self.view.addSubview(self.spinner)
                     self.spinner.start()
         
-                    self.model.loadCharacters(limit: 10, offset: model.characters.count) { [weak self] (message) in
+                 /*   self.model.loadCharacters(limit: 10, offset: model.charactersSJ.count) { [weak self] (message) in
                         guard let self = self else { return }
                         if let error = message {
                             DispatchQueue.main.async {
@@ -280,13 +360,39 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
                                 self.collectionView.layer.opacity = 1
                                 self.spinner.removeFromSuperview()
                                 self.spinner.stop()
-                                print(self.model.characters.count)
+                                print(self.model.charactersSJ.count)
+                            }
+                        }
+                    } */
+                    self.model.loadCharactersSJ(limit: 10, offset: model.charactersSJ.count) { [weak self] (message) in
+                        guard let self = self else { return }
+                        if let error = message {
+                            DispatchQueue.main.async {
+                                print(error)
+                                self.model.isLoading = false
+
+                                //let errorMessage = ErrorMessage(view: self.view)
+                                //errorMessage.showError(reverse: true, message: error, delay: 3.0)
+                            }
+                        } else {
+                            DispatchQueue.main.async { [weak self] in
+                                guard let self = self else { return }
+                                self.collectionView.reloadData()
+                                self.collectionView.layer.opacity = 1
+                                self.spinner.removeFromSuperview()
+                                self.spinner.stop()
+                                self.model.isLoading = false
+                                
                             }
                         }
                     }
+                    }
                 } else {
                     print("Loading Process")
-                }
+            
+             
+          }
+                
         }
     }
     

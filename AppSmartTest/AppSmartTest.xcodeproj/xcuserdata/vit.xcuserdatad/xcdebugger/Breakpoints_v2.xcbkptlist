@@ -7,65 +7,253 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F11E8FEA-2519-47AC-8E97-31B858AC8E91"
+            uuid = "A701B71B-7377-4A9B-AE9A-B9724B681428"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AppSmartTest/Flows/Characters/CharactersCollectionViewController.swift"
+            filePath = "AppSmartTest/Flows/CharacterDetail/CharacterDetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "updateSearchResults(for:)"
+            startingLineNumber = "465"
+            endingLineNumber = "465"
+            landmarkName = "CharacterDetailViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1687A5EC-E8F6-467D-8653-49090B72C6A9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppSmartTest/Flows/CharacterDetail/CharacterDetailViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "469"
+            endingLineNumber = "469"
+            landmarkName = "CharacterDetailViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A5C9D1BE-5A76-47B5-8910-B94ACB5EDEC9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppSmartTest/Flows/CharacterDetail/CharacterDetailViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "473"
+            endingLineNumber = "473"
+            landmarkName = "CharacterDetailViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0A153050-5F4B-4F55-8D97-ED0A6DC435C2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppSmartTest/Flows/CharacterDetail/CharacterDetailViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D799A1AE-4D46-41DB-B5A5-76B4EA939AEC"
+            uuid = "1917A2C4-082D-4F79-8872-F49560AB93FE"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AppSmartTest/Flows/Characters/CharactersCollectionViewController.swift"
+            filePath = "AppSmartTest/Flows/CharacterDetail/CharacterDetailViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
-            landmarkName = "updateSearchResults(for:)"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "setCallbacks()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C733800C-3B79-42A5-80B8-FC313232B3D6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppSmartTest/Flows/CharacterDetail/CharacterDetailTableViewHeader.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "CharacterDetailTableViewHeader"
+            landmarkType = "3">
             <Locations>
                <Location
-                  uuid = "D799A1AE-4D46-41DB-B5A5-76B4EA939AEC - 11a9a2ec5f5e22e3"
+                  uuid = "C733800C-3B79-42A5-80B8-FC313232B3D6 - c2b7c389d4e4a40b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "AppSmartTest.CharactersCollectionViewController.updateSearchResults(for: __C.UISearchController) -&gt; ()"
+                  symbolName = "AppSmartTest.CharacterDetailTableViewHeader.(state in _10A226CBEBAC8374903CC0ACCAAD6128).getter : AppSmartTest.CharacterDetailTableViewHeader.(State in _10A226CBEBAC8374903CC0ACCAAD6128)"
                   moduleName = "AppSmartTest"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/Tests/AppSmartTest/AppSmartTest/AppSmartTest/Flows/Characters/CharactersCollectionViewController.swift"
+                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/Tests/AppSmartTest/AppSmartTest/AppSmartTest/Flows/CharacterDetail/CharacterDetailTableViewHeader.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "154"
-                  endingLineNumber = "154"
-                  offsetFromSymbolStart = "4490">
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "107">
                </Location>
                <Location
-                  uuid = "D799A1AE-4D46-41DB-B5A5-76B4EA939AEC - 14ae6cbbe72c40c6"
+                  uuid = "C733800C-3B79-42A5-80B8-FC313232B3D6 - f18aa2a67ca2d817"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (AppSmartTest.Character) -&gt; Swift.Bool in AppSmartTest.CharactersCollectionViewController.updateSearchResults(for: __C.UISearchController) -&gt; ()"
+                  symbolName = "AppSmartTest.CharacterDetailTableViewHeader.(state in _10A226CBEBAC8374903CC0ACCAAD6128).setter : AppSmartTest.CharacterDetailTableViewHeader.(State in _10A226CBEBAC8374903CC0ACCAAD6128)"
                   moduleName = "AppSmartTest"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/Tests/AppSmartTest/AppSmartTest/AppSmartTest/Flows/Characters/CharactersCollectionViewController.swift"
+                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/Tests/AppSmartTest/AppSmartTest/AppSmartTest/Flows/CharacterDetail/CharacterDetailTableViewHeader.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "154"
-                  endingLineNumber = "154"
-                  offsetFromSymbolStart = "120">
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "114">
+               </Location>
+               <Location
+                  uuid = "C733800C-3B79-42A5-80B8-FC313232B3D6 - e75bd7caba2e2ffd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AppSmartTest.CharacterDetailTableViewHeader.(state in _10A226CBEBAC8374903CC0ACCAAD6128).modify : AppSmartTest.CharacterDetailTableViewHeader.(State in _10A226CBEBAC8374903CC0ACCAAD6128)"
+                  moduleName = "AppSmartTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/Tests/AppSmartTest/AppSmartTest/AppSmartTest/Flows/CharacterDetail/CharacterDetailTableViewHeader.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  uuid = "C733800C-3B79-42A5-80B8-FC313232B3D6 - e080a1636d0fb034"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AppSmartTest.CharacterDetailTableViewHeader.(state in _10A226CBEBAC8374903CC0ACCAAD6128).modify : AppSmartTest.CharacterDetailTableViewHeader.(State in _10A226CBEBAC8374903CC0ACCAAD6128) with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "AppSmartTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/Tests/AppSmartTest/AppSmartTest/AppSmartTest/Flows/CharacterDetail/CharacterDetailTableViewHeader.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "C733800C-3B79-42A5-80B8-FC313232B3D6 - 5d8d9b8a49d6d24b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AppSmartTest.CharacterDetailTableViewHeader.init(frame: __C.CGRect) -&gt; AppSmartTest.CharacterDetailTableViewHeader"
+                  moduleName = "AppSmartTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/Tests/AppSmartTest/AppSmartTest/AppSmartTest/Flows/CharacterDetail/CharacterDetailTableViewHeader.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "1531">
+               </Location>
+               <Location
+                  uuid = "C733800C-3B79-42A5-80B8-FC313232B3D6 - 1669796acbd1284a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AppSmartTest.CharacterDetailTableViewHeader.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;AppSmartTest.CharacterDetailTableViewHeader&gt;"
+                  moduleName = "AppSmartTest"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Shared/Previously%20Relocated%20Items/Security/iDisk/Geekbrains/Tests/AppSmartTest/AppSmartTest/AppSmartTest/Flows/CharacterDetail/CharacterDetailTableViewHeader.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "1457">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "36EA1CF3-5DF3-4DA5-91CA-C39DD1D84464"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppSmartTest/Flows/CharacterDetail/CharacterDetailTableViewHeader.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "setupViews()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "73242EFD-2868-4320-A8AC-E16D2D4DA20D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppSmartTest/Flows/CharacterDetail/CharacterDetailViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "077B6164-7BAA-4045-B895-514F1239A6B8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppSmartTest/Flows/CharacterDetail/CharacterDetailTableViewHeader.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "segmentSwitched()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2DC14D89-3116-463A-8670-F831AF823E63"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppSmartTest/Flows/CharacterDetail/CharacterDetailViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "setCallbacks()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

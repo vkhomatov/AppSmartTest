@@ -16,7 +16,6 @@ class SpinnerView: UIView {
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.textColor = .white
         label.sizeToFit()
-
         return label
     }()
 
@@ -32,9 +31,9 @@ class SpinnerView: UIView {
         return spinner
     }()
 
-    var frameWidthCalculated: CGFloat {
-        return spinner.frame.size.width + messageLabel.frame.size.width
-    }
+//    var frameWidthCalculated: CGFloat {
+//        return spinner.frame.size.width + messageLabel.frame.size.width
+//    }
 
     override init(frame: CGRect) {
 
@@ -45,6 +44,8 @@ class SpinnerView: UIView {
 
         self.setupSubviews()
     }
+    
+    
     
 //    deinit {
 //        self.removeFromSuperview()
@@ -90,6 +91,9 @@ class SpinnerView: UIView {
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(spinner)
         self.addSubview(messageLabel)
+//        if let superview = self.superview {
+//            self.center = superview.center
+//        }
      //   self.backgroundColor = .systemYellow
         //self.layer.opacity = 0.7
     }

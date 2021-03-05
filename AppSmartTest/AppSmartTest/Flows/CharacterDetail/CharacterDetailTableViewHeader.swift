@@ -12,7 +12,7 @@ class CharacterDetailTableViewHeader: UIView {
   //  var name = UILabel(frame: .zero)
     var avatar = UIImageView(frame: .zero)
     var info = UITextView(frame: .zero)
-    var segment = UISegmentedControl(items: ["comics", "stories", "events", "series"])
+    var segment = UISegmentedControl(items: ["comics", "events", "series", "stories"])
     
     var segmentSwitchCallback: ((_ selectedSectionNumber: Int) -> Void)?
     
@@ -33,9 +33,9 @@ class CharacterDetailTableViewHeader: UIView {
         segment.addTarget(self, action: #selector(self.segmentSwitched), for: .valueChanged)
     }
     
-    private func setSegmentedControlSection() {
-        segment.selectedSegmentIndex = state.rawValue
-    }
+//    private func setSegmentedControlSection() {
+//        segment.selectedSegmentIndex = state.rawValue
+//    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -63,18 +63,13 @@ class CharacterDetailTableViewHeader: UIView {
         let titleSelectedTextAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.foregroundColor: UIColor.red as Any]
         segment.setTitleTextAttributes(titleSelectedTextAttributes, for: .selected)
 
-        setSegmentedControlSection()
+     //   setSegmentedControlSection()
         
         self.addSubview(segment)
-        segment.selectedSegmentIndex = 0
+       // segment.selectedSegmentIndex = 0
         segment.addTarget(self, action: #selector(self.segmentSwitched), for: .valueChanged)
         
-//        name.textAlignment = .left
-//        name.font = .systemFont(ofSize: 18, weight: .bold)
-//        name.textColor = UIColor.white
-//        name.numberOfLines = 2
-//        name.translatesAutoresizingMaskIntoConstraints = false
-//        self.addSubview(name)
+      
 
       //  name.text = "Жопер-мэн"
         
@@ -94,9 +89,23 @@ class CharacterDetailTableViewHeader: UIView {
         info.translatesAutoresizingMaskIntoConstraints = false
         info.layer.cornerRadius = 10
         info.layer.opacity = 0.85
+        info.showsVerticalScrollIndicator = false
+        info.showsHorizontalScrollIndicator = false
+
 
         self.addSubview(info)
         info.isSelectable = false
+        
+      //  if #available(iOS 13.0, *) {
+
+    //    } else {
+//            name.textAlignment = .left
+//            name.font = .systemFont(ofSize: 28, weight: .bold)
+//            name.textColor = .white
+//            name.numberOfLines = 2
+//            name.translatesAutoresizingMaskIntoConstraints = false
+//            avatar.addSubview(name)
+  //      }
         
        // info.text = "Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука"
 
@@ -112,10 +121,16 @@ class CharacterDetailTableViewHeader: UIView {
         avatar.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 5.0).isActive = true
         avatar.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -5.0).isActive = true
         
-//        name.topAnchor.constraint(equalTo: avatar.topAnchor, constant: 5.0).isActive = true
-//        name.heightAnchor.constraint(greaterThanOrEqualToConstant: 30.0).isActive = true
-//        name.leftAnchor.constraint(equalTo: avatar.leftAnchor, constant: 5.0).isActive = true
-//        name.rightAnchor.constraint(equalTo: avatar.rightAnchor, constant: -5.0).isActive = true
+//        if #available(iOS 13.0, *) {
+//
+//        } else {
+           // name.topAnchor.constraint(equalTo: avatar.topAnchor, constant: 5.0).isActive = true
+//            name.heightAnchor.constraint(greaterThanOrEqualToConstant: 30.0).isActive = true
+//            name.leftAnchor.constraint(equalTo: avatar.leftAnchor, constant: 5.0).isActive = true
+//            name.rightAnchor.constraint(equalTo: avatar.rightAnchor, constant: -5.0).isActive = true
+//            name.bottomAnchor.constraint(equalTo: avatar.bottomAnchor, constant: -5.0).isActive = true
+
+//        }
         
         info.bottomAnchor.constraint(equalTo: avatar.bottomAnchor, constant: -3.0).isActive = true
         info.heightAnchor.constraint(equalToConstant: 100.0).isActive = true
@@ -125,7 +140,7 @@ class CharacterDetailTableViewHeader: UIView {
         segment.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 15.0).isActive = true
         segment.leftAnchor.constraint(equalTo: avatar.leftAnchor).isActive = true
         segment.rightAnchor.constraint(equalTo: avatar.rightAnchor).isActive = true
-        segment.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20.0).isActive = true
+        segment.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15.0).isActive = true
     }
     
     @objc private func segmentSwitched() {

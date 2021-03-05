@@ -42,11 +42,16 @@ class CharacterCollectionViewCell: UICollectionViewCell {
 
        // info.font = info.font.withSize(13.0)
         info.font = .systemFont(ofSize: 10, weight: .semibold)
-        info.textColor = UIColor.white
+        info.textColor = .white
         info.textAlignment = .left
         info.numberOfLines = 5
         info.translatesAutoresizingMaskIntoConstraints = false
         info.lineBreakMode = .byTruncatingTail
+       // info.layer.cornerRadius = 6
+       // info.backgroundColor = .white
+      //  info.layer.opacity = 0.8
+
+
       //  info.text = "Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука Сука просто сука"
         
         avatar.contentMode = .scaleAspectFill
@@ -77,16 +82,18 @@ class CharacterCollectionViewCell: UICollectionViewCell {
         name.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10.0).isActive = true
 
         avatar.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 5.0).isActive = true
-        avatar.heightAnchor.constraint(equalToConstant: 140.0).isActive = true
+     //   avatar.heightAnchor.constraint(equalToConstant: 140.0).isActive = true
         avatar.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 3.0).isActive = true
         avatar.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -3.0).isActive = true
+        avatar.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5.0).isActive = true
 
-        info.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 5.0).isActive = true
+
+      //  info.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 5.0).isActive = true
         info.heightAnchor.constraint(greaterThanOrEqualToConstant: 22.0).isActive = true
         info.leftAnchor.constraint(equalTo: name.leftAnchor, constant: 0.0).isActive = true
         info.rightAnchor.constraint(equalTo: name.rightAnchor, constant: 0.0).isActive = true
         
-        info.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5.0).isActive = true
+        info.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8.0).isActive = true
        // info.heightAnchor.constraint(greaterThanOrEqualToConstant: 22.0).isActive = true
        // info.leftAnchor.constraint(equalTo: name.leftAnchor).isActive = true
        // info.rightAnchor.constraint(equalTo: name.rightAnchor).isActive = true
