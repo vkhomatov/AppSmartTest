@@ -1,8 +1,12 @@
 # AppSmartTest
 Task definition:
+
 Audit of skills for working at
+
 iOS Developer
+
  You should create an application containing 2 screens. The first screen should display UICollectionView with two columns of Marvel's characters using the open Marvel API (​https:// developer.marvel.com/docs​). Each UICollectionViewCell with a character should have an avatar, name and description. This list should have infinite scrolling or pagination in bottom for loading new characters.
+ 
 Second screen should contain additional information about the chosen character on the first screen. It should contain his comics, stories, events, series.
 Design of screens is not so important, you can create it by your vision.
 After finishing you should upload the project to GitHub (or GitLab/Bitbucket).
