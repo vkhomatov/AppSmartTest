@@ -9,39 +9,6 @@ import Foundation
 import SwiftyJSON
 import RealmSwift
 
-
-//Character {
-//id (int, optional): The unique ID of the character resource.,
-//name (string, optional): The name of the character.,
-//description (string, optional): A short bio or description of the character.,
-//modified (Date, optional): The date the resource was most recently modified.,
-//resourceURI (string, optional): The canonical URL identifier for this resource.,
-//urls (Array[Url], optional): A set of public web site URLs for the resource.,
-//thumbnail (Image, optional): The representative image for this character.,
-//comics (ComicList, optional): A resource list containing comics which feature this character.,
-//stories (StoryList, optional): A resource list of stories in which this character appears.,
-//events (EventList, optional): A resource list of events in which this character appears.,
-//series (SeriesList, optional): A resource list of series in which this character appears.
-//}
-
-//CharacterDataWrapper {
-//code (int, optional): The HTTP status code of the returned result.,
-//status (string, optional): A string description of the call status.,
-//copyright (string, optional): The copyright notice for the returned result.,
-//attributionText (string, optional): The attribution notice for this result. Please display either this notice or the contents of the attributionHTML field on all screens which contain data from the Marvel Comics API.,
-//attributionHTML (string, optional): An HTML representation of the attribution notice for this result. Please display either this notice or the contents of the attributionText field on all screens which contain data from the Marvel Comics API.,
-//data (CharacterDataContainer, optional): The results returned by the call.,
-//etag (string, optional): A digest value of the content returned by the call.
-//}
-//CharacterDataContainer {
-//offset (int, optional): The requested offset (number of skipped results) of the call.,
-//limit (int, optional): The requested result limit.,
-//total (int, optional): The total number of resources available given the current filter set.,
-//count (int, optional): The total number of results returned by this call.,
-//results (Array[Character], optional): The list of characters returned by the call.
-//}
-
-
 class ResponceSJ {
     var code: Int?
     var status: String?
@@ -51,10 +18,8 @@ class ResponceSJ {
     var etag: String?
     var data: DataSJ?
     
-    
     convenience init(from json: JSON) {
         self.init()
-        
         self.code = json["code"].intValue
         self.status = json["status"].stringValue
         self.copyright = json["copyright"].stringValue
@@ -62,9 +27,7 @@ class ResponceSJ {
         self.attributionHTML = json["attributionHTML"].stringValue
         self.data = DataSJ(from: json["data"])
         self.etag = json["etag"].stringValue
-        
     }
-    
 }
 
 class DataSJ {
@@ -76,97 +39,92 @@ class DataSJ {
     
     convenience init(from json: JSON) {
         self.init()
-        
         self.offset = json["offset"].intValue
         self.limit = json["limit"].intValue
         self.total = json["total"].intValue
         self.count = json["count"].intValue
-        
         let resultsJSONs = json["results"].arrayValue
         self.results = resultsJSONs.map { CharacterSJ (from: $0) }
-        
     }
 }
-
-
 
 class CharacterSJ: Object {
     
     @objc dynamic var id: Int = 0
     @objc dynamic var name: String?
     @objc dynamic var descriptionSJ: String?
-   // var modified: Date?
-   // var resourceURI: String?
-   // var urls: [UrlSJ]?
+  //  var modified: Date?
+  //  var resourceURI: String?
+  //  var urls: [UrlSJ]?
+  //  var thumbnail: ImageSJ?
     
- //   var thumbnail: ImageSJ?
-    
-    var fileExtension: String?
-    var path: String?
-    
-    @objc dynamic var url: URL? {
-        if self.fileExtension != "" && self.path != "" {
-            if let fileExtension = self.fileExtension {
-            return URL(string: securePath(path: path) + "." + fileExtension)
-            }
-        }
-        return nil
-    }
-    
-    let comicsSJRealm = List<AnyStorySJ>()
+    @objc dynamic var fileExtension: String?
+    @objc dynamic var path: String?
+    @objc dynamic var segment = 0
 
     
-    var comicsSJ = [AnyStorySJ]()
-    var eventsSJ = [AnyStorySJ]()
-    var seriesSJ = [AnyStorySJ]()
-    var storiesSJ = [AnyStorySJ]()
-    
-    
-    @objc dynamic var segment = 0
-    
-    
-//    var comicsSJ = ComicsSJ()
-//    var eventsSJ = ComicsSJ()
-//    var seriesSJ = ComicsSJ()
-//    var storiesSJ = ComicsSJ()
-    
+    var _comicsSJ = List<ComicsSJ>()
+    var comicsSJ: [AnyStoryProtocol] {
+        get {
+            return _comicsSJ.map { $0 }
+        }
+        set {
+            _comicsSJ.removeAll()
+            _comicsSJ.append(objectsIn: newValue.map { $0 as? ComicsSJ ??  ComicsSJ() })
+        }
+    }
+
+    var _eventsSJ = List<EventsSJ>()
+    var eventsSJ: [AnyStoryProtocol] {
+        get {
+            return _eventsSJ.map { $0 }
+        }
+        set {
+            _eventsSJ.removeAll()
+            _eventsSJ.append(objectsIn: newValue.map { $0 as? EventsSJ ?? EventsSJ() })
+        }
+    }
+
+    var _seriesSJ = List<SeriesSJ>()
+    var seriesSJ: [AnyStoryProtocol] {
+        get {
+            return _seriesSJ.map { $0 }
+        }
+        set {
+            _seriesSJ.removeAll()
+            _seriesSJ.append(objectsIn: newValue.map { $0 as? SeriesSJ ?? SeriesSJ() })
+        }
+    }
+
+    var _storiesSJ = List<StoriesSJ>()
+    var storiesSJ: [AnyStoryProtocol] {
+        get {
+            return _storiesSJ.map { $0 }
+        }
+        set {
+            _storiesSJ.removeAll()
+            _storiesSJ.append(objectsIn: newValue.map { $0 as? StoriesSJ ?? StoriesSJ() })
+        }
+    }
     
     convenience init(from json: JSON) {
         self.init()
-        
         self.id = json["id"].intValue
         self.name = json["name"].stringValue
         self.descriptionSJ = json["description"].stringValue
-       // self.thumbnail = ImageSJ(from: json["thumbnail"])
-
-      //  self.modified = json["modified"].rawValue as? Date
-      //  self.resourceURI = json["resourceURI"].stringValue
-        
-        
         self.fileExtension = json["thumbnail"]["extension"].stringValue
         self.path = json["thumbnail"]["path"].stringValue
-        
-//        self.comicsSJ = ComicsSJ(from: json["comics"])
-//        self.eventsSJ = ComicsSJ(from: json["events"])
-//        self.seriesSJ = ComicsSJ(from: json["series"])
-//        self.storiesSJ = ComicsSJ(from: json["stories"])
-        
-      //  let urlsJSONs = json["urls"].arrayValue
-      //  self.urls = urlsJSONs.map { UrlSJ(from: $0) }
-        
+       // self.modified = json["modified"].date
+       // self.resourceURI  = json["resourceURI"].stringValue
+       // self.thumbnail = ImageSJ(from: json["thumbnail"])
+
     }
     
-    func securePath(path: String?) -> String {
-        guard let path = path else { return "" }
-        if path.hasPrefix("http://") {
-            if let range = path.range(of: "http://") {
-                var newPath = path
-                newPath.removeSubrange(range)
-                return "https://" + newPath
-            }
-        }
-        return path
-    }
+ /*   let urlsJSONs = json["urls"].arrayValue
+    self.urls = urlsJSONs.map { UrlSJ(from: $0) } */
+
+    
+
     
     
     override static func primaryKey() -> String? {
@@ -175,110 +133,27 @@ class CharacterSJ: Object {
     
 }
 
+/*class UrlSJ {
+    var type: String?
+    var url: String?
+    
+    convenience init(from json: JSON) {
+        self.init()
+        self.type = json["type"].stringValue
+        self.url = json["url"].stringValue
 
-//class ImageSJ {
-//
-//    var fileExtension: String?
-//    var path: String?
-//
-//    convenience init(from json: JSON) {
-//        self.init()
-//        self.fileExtension = json["extention"].stringValue
-//        self.path = json["path"].stringValue
-//    }
-//
-//    func securePath(path: String?) -> String {
-//        guard let path = path else { return "" }
-//        if path.hasPrefix("http://") {
-//            let range = path.range(of: "http://")
-//            var newPath = path
-//            newPath.removeSubrange(range!)
-//            return "https://" + newPath
-//        } else {
-//            return path
-//        }
-//
-//    }
-//
-//    @objc dynamic var url: URL? {
-//        if self.fileExtension != "" && self.path != "" {
-//            if let fileExtension = self.fileExtension {
-//            return URL(string: securePath(path: path) + "." + fileExtension)
-//            }
-//        }
-//        return nil
-//    }
-//
-//}
+    }
+} */
 
+class ImageSJ {
 
-//class UrlSJ {
-//    var type: String?
-//    var url: String?
-//
-//    convenience init(from json: JSON) {
-//        self.init()
-//        self.type = json["type"].stringValue
-//        self.url = json["url"].stringValue
-//
-//    }
-//}
+    var fileExtension: String?
+    var path: String?
 
-//class ComicsSJ {
-//    var available, returned: Int?
-//    var collectionURI: String?
-//    var items: [ComicsItemSJ]?
-//
-//    convenience init(from json: JSON) {
-//        self.init()
-//        self.available = json["available"].intValue
-//        self.returned = json["returned"].intValue
-//        self.collectionURI = json["collectionURI"].stringValue
-//
-//        let comicsItemsJSONs = json["items"].arrayValue
-//        self.items = comicsItemsJSONs.map { ComicsItemSJ(from: $0)  }
-//    }
-//}
+    convenience init(from json: JSON) {
+        self.init()
+        self.fileExtension = json["extention"].stringValue
+        self.path = json["path"].stringValue
+    }
 
-//class StoriesSJ {
-//    var available, returned: Int?
-//    var collectionURI: String?
-//    var items: [StoriesItemSJ]?
-//    var collectionURI: String?
-//
-//    convenience init(from json: JSON) {
-//        self.init()
-//        self.available = json["available"].intValue
-//        self.returned = json["returned"].intValue
-//        self.collectionURI = json["collectionURI"].stringValue
-//
-//        let storiesItemsJSONs = json["items"].arrayValue
-//        self.items = storiesItemsJSONs.map { ComicsItemSJ(from: $0)  }
-//    }
-//}
-
-// MARK: - ComicsItem
-//class ComicsItemSJ {
-//    var resourceURI: String?
-//    var name: String?
-//
-//    convenience init(from json: JSON) {
-//        self.init()
-//        self.resourceURI = json["resourceURI"].stringValue
-//        self.name = json["name"].stringValue
-//    }
-//}
-//
-//
-//// MARK: - StoriesItem
-//class StoriesItemSJ {
-//    var resourceURI, name, type: String?
-//    convenience init(from json: JSON) {
-//        self.init()
-//        self.resourceURI = json["resourceURI"].stringValue
-//        self.name = json["name"].stringValue
-//        self.type = json["type"].stringValue
-//
-//    }
-//}
-
+}

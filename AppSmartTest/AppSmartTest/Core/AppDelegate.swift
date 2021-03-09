@@ -12,6 +12,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var navController = UINavigationController()
+    private let network = NetworkMonitor()
+
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
                 
@@ -24,8 +26,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    private func startNetworkMonitor() {
+        if !network.getNetworkStatus() {
+            DispatchQueue.main.async {
+                guard let navcontroller = self.navController.view else { return }
+                let errorMessage = ErrorMessage(view: navcontroller)
+                errorMessage.showError(reverse: true, message: "Offline Mode", delay: 3.0)
+            }
+        }
+        
+        self.network.monitor.pathUpdateHandler = { [weak self] path in
+            guard let self = self else { return }
+            if path.status == .satisfied {
+                DispatchQueue.main.async {
+                    guard let navcontroller = self.navController.view else { return }
+
+                    let errorMessage = ErrorMessage(view: navcontroller)
+                        errorMessage.showError(reverse: true, message: "Back to Online", delay: 3.0)
+                }
+            } else if path.status == .unsatisfied {
+                DispatchQueue.main.async {
+                    guard let navcontroller = self.navController.view else { return }
+                    let errorMessage = ErrorMessage(view: navcontroller)
+                        errorMessage.showError(reverse: true, message: "Offline Mode", delay: 3.0)
+                }
+            }
+        }
+    }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        
+        startNetworkMonitor()
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }

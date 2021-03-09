@@ -7,7 +7,6 @@
 
 import Network
 
-// монитор сети
 final class NetworkMonitor {
     let monitor = NWPathMonitor()
     
