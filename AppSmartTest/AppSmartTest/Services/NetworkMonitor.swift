@@ -11,9 +11,10 @@ final class NetworkMonitor {
     let monitor = NWPathMonitor()
     
     init() {
-        monitor.start(queue: .global())
+        let queue = DispatchQueue(label: "Monitor")
+        monitor.start(queue: queue)
     }
-    
+
     deinit {
         monitor.cancel()
     }

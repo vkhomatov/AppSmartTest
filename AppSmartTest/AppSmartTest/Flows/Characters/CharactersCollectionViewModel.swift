@@ -17,7 +17,7 @@ class CharactersCollectionViewModel {
     var search: Bool = false
     var searchText = String()
     var searchTotal = Int()
-
+    
     func loadCharactersSJ(limit: Int, offset: Int, name: String? = nil, completion: @escaping (String?) -> ()) {
         networkService.getCharactersSJbyName(limit: limit, offset: offset, name: name)  { [weak self] result in
             guard let self = self else { return }
@@ -44,15 +44,12 @@ class CharactersCollectionViewModel {
                         self.charactersSJ.append(contentsOf: characters)
                         realm.add(self.charactersSJ, update: .modified)
                     }
-                } else /*if let searchName = name, searchName != ""*/ {
+                } else  {
                     if let total = data.data?.total {
                         self.searchTotal = total
-                      //  print("Total = \(self.searchTotal)")
                     }
                     self.search = true
                     self.searchCharactersSJ.append(contentsOf: characters)
-                 //   self.searchCharactersSJ = characters
-                   // print(self.searchCharactersSJ)
                 }
                 completion(nil)
                 #if DEBUG
@@ -67,40 +64,6 @@ class CharactersCollectionViewModel {
             }
         }
     }
-    
-  /*  func loadCharactersSJByName(limit: Int, offset: Int, name: String, completion: @escaping (String?) -> ()) {
-        networkService.getCharactersSJbyName(limit: limit, offset: offset, name: name)  { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case let .success(data):
-                guard data.code == 200 else {
-                    completion("Error Return Code: \(String(describing: data.code?.description))")
-                    #if DEBUG
-                    print("Error Return Code: \(String(describing: data.code?.description))")
-                    #endif
-                    return
-                }
-                guard let characters = data.data?.results  else {
-                    completion("Error: No data returned")
-                    #if DEBUG
-                    print("Error: No data returned")
-                    #endif
-                    return
-                }
-                self.searchCharactersSJ = characters
-                completion(nil)
-                #if DEBUG
-                print("Loading successfully complete")
-                #endif
-            case .failure(let error):
-                completion(error.localizedDescription)
-                #if DEBUG
-                print("Error: \(error.localizedDescription)")
-                #endif
-                
-            }
-        }
-    } */
     
     func createURL(fileExtension: String?, path: String?) -> URL? {
         func securePath(path: String?) -> String {

@@ -11,7 +11,7 @@ import Kingfisher
 class CharactersCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, UISearchResultsUpdating {
     
     private let model = CharactersCollectionViewModel()
-    private let network = NetworkMonitor()
+    var network = NetworkMonitor()
     private var searchController = UISearchController(searchResultsController: nil)
     
     init() {
@@ -28,131 +28,13 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
         setupCollectionView()
         setupSearchBar()
         startNetworkMonitor()
-        
-        loadData(limit: 10, offset: 0, readRealm: true)
-        
+        self.loadData(limit: 10, offset: 0, readRealm: true)
 
-        
-       // if let charactersSJ =  try? RealmService.get(CharacterSJ.self) { model.charactersSJ  = charactersSJ }
-        
- //       if model.charactersSJ.count == 0 {
-        //
-     /*   self.model.isLoading.toggle()
-            let spinner = SpinnerView(frame: CGRect(x: self.collectionView.frame.midX-55, y: self.collectionView.frame.midY-25, width: 110, height: 50))
-            view.addSubview(spinner)
-            spinner.start()
-            self.collectionView.layer.opacity = 0.3
-            self.collectionView.isUserInteractionEnabled = false
-            
-        self.model.loadCharactersSJ(limit: 10, offset: 0) { [weak self] (message) in
-                guard let self = self else { return }
-                if let error = message {
-                    DispatchQueue.main.async {
-                        self.collectionView.layer.opacity = 1
-                        self.model.isLoading.toggle()
-                        self.collectionView.isUserInteractionEnabled = true
-                        spinner.stop()
-                        spinner.removeFromSuperview()
-                        guard let navcontroller = self.navigationController?.view else { return }
-                        let errorMessage = ErrorMessage(view: navcontroller)
-                        errorMessage.showError(reverse: true, message: error, delay: 3.0)
-                        if let charactersSJ =  try? RealmService.get(CharacterSJ.self) {
-                            self.model.charactersSJ  = charactersSJ
-                            self.collectionView.reloadData()
-                            #if DEBUG
-                            print("Characters load from Realm")
-                            #endif
-                        }
-
-                    }
-                } else {
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        self.collectionView.reloadData()
-                        spinner.stop()
-                        spinner.removeFromSuperview()
-                        self.collectionView.layer.opacity = 1
-                        self.model.isLoading.toggle()
-                        self.collectionView.isUserInteractionEnabled = true
-                    }
-                }
-            } */
-        //
-//        } else {
-//            #if DEBUG
-//            print("Characters load from Realm")
-//            #endif
-      //  }
     }
     
-    // MARK: - LoadData
-    private func loadData(limit: Int, offset: Int, name: String? = nil, readRealm: Bool? = nil) {
-        self.model.isLoading.toggle()
-        let spinner = SpinnerView(frame: CGRect(x: self.collectionView.frame.midX-55, y: self.collectionView.frame.midY-25, width: 110, height: 50))
-        view.addSubview(spinner)
-        spinner.start()
-        self.collectionView.layer.opacity = 0.3
-        self.collectionView.isUserInteractionEnabled = false
-        
-        self.model.loadCharactersSJ(limit: limit, offset: offset, name: name) { [weak self] (message) in
-            guard let self = self else { return }
-            if let error = message {
-                DispatchQueue.main.async {
-                    self.collectionView.layer.opacity = 1
-                    self.model.isLoading.toggle()
-                    self.collectionView.isUserInteractionEnabled = true
-                    spinner.stop()
-                    spinner.removeFromSuperview()
-                    
-               /*     guard let navcontroller = self.navigationController?.view else { return }
-                    let errorMessage = ErrorMessage(view: navcontroller)
-                    errorMessage.showError(reverse: true, message: error, delay: 3.0) */
-                    
-                    if let readRealm = readRealm, readRealm == true {
-                        if let charactersSJ = try? RealmService.get(CharacterSJ.self) {
-                            self.model.charactersSJ  = charactersSJ
-                            self.collectionView.reloadData()
-                            #if DEBUG
-                            print("Characters load from Realm")
-                            #endif
-                        }
-                    }
-                    
-                    if let name = name {
-                        if self.model.charactersSJ.count > 0  {
-                            self.model.searchCharactersSJ =  self.model.charactersSJ.filter( { $0.name?.prefix(name.count).description == name } )
-                            self.model.search = true
-                            self.collectionView.reloadData()
-                        } else {
-                            guard let navcontroller = self.navigationController?.view else { return }
-                            let errorMessage = ErrorMessage(view: navcontroller)
-                            errorMessage.showError(reverse: true, message: error, delay: 3.0)
-                        }
-                    } /*else {
-                        guard let navcontroller = self.navigationController?.view else { return }
-                        let errorMessage = ErrorMessage(view: navcontroller)
-                        errorMessage.showError(reverse: true, message: error, delay: 3.0)
-                    } */
-
-                }
-            } else {
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    spinner.stop()
-                    spinner.removeFromSuperview()
-                    self.collectionView.layer.opacity = 1
-                    self.model.isLoading.toggle()
-                    self.collectionView.isUserInteractionEnabled = true
-                    self.collectionView.reloadData()
-                   // print(self.model.searchCharactersSJ)
-
-                }
-            }
-        }
-    }
-    
+   
     // MARK: - NetworkMonitor
-    private func startNetworkMonitor() {
+    func startNetworkMonitor() {
         guard let navcontroller = self.navigationController?.view else { return }
         if !network.getNetworkStatus() {
             DispatchQueue.main.async {
@@ -160,27 +42,31 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
                 errorMessage.showError(reverse: true, message: "Offline Mode", delay: 3.0)
             }
         }
-        self.network.monitor.pathUpdateHandler = { path in
-            if path.status == .satisfied {
+        
+     //   #if targetEnvironment(simulator)
+        // code to run if running on simulator
+    //    #else
+        network.monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied  {
                 DispatchQueue.main.async {
                     let errorMessage = ErrorMessage(view: navcontroller)
                     errorMessage.showError(reverse: true, message: "Online Mode", delay: 3.0)
-                    if self.model.charactersSJ.count == 0 {
-                        self.loadData(limit: 10, offset: 0, readRealm: true)
-                    }
+                    if self.model.charactersSJ.count < 10 {
+                        self.loadData(limit: 10, offset: 0)
+                    } else { self.collectionView.reloadData() }
                 }
-            } else if path.status == .unsatisfied {
+            } else if path.status == .unsatisfied  {
                 DispatchQueue.main.async {
                     let errorMessage = ErrorMessage(view: navcontroller)
                     errorMessage.showError(reverse: true, message: "Offline Mode", delay: 3.0)
-                    
                 }
             }
         }
+     //   #endif
     }
     
+    
     // MARK: - Setup Views
-
     private func setupCollectionView() {
         guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout  else { return }
         flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 3, bottom: 5, right: 3)
@@ -234,62 +120,73 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
                 model.searchText = text
                 model.searchCharactersSJ.removeAll()
                 collectionView.reloadData()
-               // print("model.searchCharactersSJ.removeAll()")
-
                 if text.count < 1 {
                     searchController.resignFirstResponder()
                     model.search = false
-                //    model.searchCharactersSJ.removeAll()
-                //    collectionView.reloadData()
-                } else if !model.isLoading /*&& model.searchCharactersSJ.count == 0*/ {
-                    
-
-                        loadData(limit: 10, offset: 0, name: text)
-                    
-                 //   print(model.searchCharactersSJ)
-
-                    //
-                 /*   model.isLoading.toggle()
-                    let spinner = SpinnerView(frame: CGRect(x: self.collectionView.frame.midX-55, y: self.collectionView.frame.midY-25, width: 110, height: 50))
-                    spinner.start()
-                    view.addSubview(spinner)
-                    collectionView.layer.opacity = 0.3
-                    collectionView.isUserInteractionEnabled = false
-                    
-                    self.model.loadCharactersSJByName(limit: 99, offset: 0, name: text) { [weak self] (message) in
-                        guard let self = self else { return }
-                        if let error = message {
-                            DispatchQueue.main.async {
-                                self.collectionView.layer.opacity = 1
-                                spinner.stop()
-                                spinner.removeFromSuperview()
-                                self.model.isLoading.toggle()
-                                self.collectionView.isUserInteractionEnabled = true
-                     
-                                if self.model.charactersSJ.count > 0  {
-                                    self.model.searchCharactersSJ =  self.model.charactersSJ.filter( { $0.name?.prefix(text.count).description == text } )
-                                    self.model.search.toggle()
-                                    self.collectionView.reloadData()
-                                } else {
-                                    guard let navcontroller = self.navigationController?.view else { return }
-                                    let errorMessage = ErrorMessage(view: navcontroller)
-                                    errorMessage.showError(reverse: true, message: error, delay: 3.0)
-                                }
-                            }
-                        } else {
-                            DispatchQueue.main.async { [weak self] in
-                                guard let self = self else { return }
-                                self.collectionView.reloadData()
-                                spinner.stop()
-                                spinner.removeFromSuperview()
-                                self.collectionView.layer.opacity = 1
-                                self.model.isLoading.toggle()
-                                self.collectionView.isUserInteractionEnabled = true
-                            }
-                        }
-                    } */
-                    //
+                } else if !model.isLoading  {
+                    loadData(limit: 10, offset: 0, name: text)
                     model.search = true
+                }
+            }
+        }
+    }
+    
+    // MARK: - LoadData
+    private func loadData(limit: Int, offset: Int, name: String? = nil, readRealm: Bool? = nil) {
+        self.model.isLoading.toggle()
+        let spinner = SpinnerView(frame: CGRect(x: self.collectionView.frame.midX-55, y: self.collectionView.frame.midY-25, width: 110, height: 50))
+        view.addSubview(spinner)
+        spinner.start()
+        self.collectionView.layer.opacity = 0.3
+        self.collectionView.isUserInteractionEnabled = false
+        
+        self.model.loadCharactersSJ(limit: limit, offset: offset, name: name) { [weak self] (message) in
+            guard let self = self else { return }
+            if let error = message {
+                DispatchQueue.main.async {
+                    self.collectionView.layer.opacity = 1
+                    self.model.isLoading.toggle()
+                    self.collectionView.isUserInteractionEnabled = true
+                    spinner.stop()
+                    spinner.removeFromSuperview()
+
+                    if let readRealm = readRealm, readRealm == true {
+                        if let charactersSJ = try? RealmService.get(CharacterSJ.self) {
+                            self.model.charactersSJ  = charactersSJ
+                            self.collectionView.reloadData()
+                            #if DEBUG
+                            print("Characters load from Realm")
+                            #endif
+                        }
+                    }
+                    
+                    if let name = name {
+                        if self.model.charactersSJ.count > 0  {
+                            self.model.searchCharactersSJ =  self.model.charactersSJ.filter( { $0.name?.prefix(name.count).description == name } )
+                            self.model.search = true
+                            self.collectionView.reloadData()
+                        } else {
+                            guard let navcontroller = self.navigationController?.view else { return }
+                            let errorMessage = ErrorMessage(view: navcontroller)
+                            errorMessage.showError(reverse: true, message: error, delay: 3.0)
+                        }
+                    } else {
+                        guard let navcontroller = self.navigationController?.view else { return }
+                        let errorMessage = ErrorMessage(view: navcontroller)
+                        errorMessage.showError(reverse: true, message: error, delay: 3.0)
+                    }
+                    
+                }
+            } else {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    spinner.stop()
+                    spinner.removeFromSuperview()
+                    self.collectionView.layer.opacity = 1
+                    self.model.isLoading.toggle()
+                    self.collectionView.isUserInteractionEnabled = true
+                    self.collectionView.reloadData()
+                    
                 }
             }
         }
@@ -307,7 +204,6 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "characterCell", for: indexPath) as? CharacterCollectionViewCell else { return UICollectionViewCell() }
-            
         if model.search {
             if indexPath.row < model.searchCharactersSJ.count {
                 
@@ -331,7 +227,6 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
             }
             
         }
-        
         return cell
     }
     
@@ -363,62 +258,22 @@ class CharactersCollectionViewController: UICollectionViewController, UICollecti
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
-        
-        
-    
-            if self.model.isLoading == false {
-                
-                
-                if !model.search {
-                    if (indexPath.row + 1 == model.charactersSJ.count) {
-                        loadData(limit: 10, offset: model.charactersSJ.count)
-                    }
-                } else {
-                    if (indexPath.row + 1 == model.searchCharactersSJ.count) && (model.searchCharactersSJ.count < model.searchTotal) {
-                        print(model.searchCharactersSJ.count)
-                        loadData(limit: 10, offset: model.searchCharactersSJ.count, name: model.searchText)
-                    }
+        if self.model.isLoading == false {
+            if !model.search {
+                if (indexPath.row + 1 == model.charactersSJ.count) {
+                    loadData(limit: 10, offset: model.charactersSJ.count)
                 }
-
-                //
-            /*    model.isLoading = true
-                let spinner = SpinnerView(frame: CGRect(x: self.collectionView.frame.midX-55, y: self.collectionView.frame.midY-25, width: 110, height: 50))
-                view.addSubview(spinner)
-                spinner.start()
-                collectionView.layer.opacity = 0.3
-                collectionView.isUserInteractionEnabled = false
-                self.model.loadCharactersSJ(limit: 10, offset: model.charactersSJ.count) { [weak self] (message) in
-                    guard let self = self else { return }
-                    if let error = message {
-                        DispatchQueue.main.async {
-                            self.collectionView.layer.opacity = 1
-                            spinner.stop()
-                            spinner.removeFromSuperview()
-                            self.model.isLoading = false
-                            self.collectionView.isUserInteractionEnabled = true
-                            guard let navcontroller = self.navigationController?.view else { return }
-                            let errorMessage = ErrorMessage(view: navcontroller)
-                            errorMessage.showError(reverse: true, message: error, delay: 3.0)
-                        }
-                    } else {
-                        DispatchQueue.main.async { [weak self] in
-                            guard let self = self else { return }
-                            self.collectionView.reloadData()
-                            self.collectionView.layer.opacity = 1
-                            spinner.stop()
-                            spinner.removeFromSuperview()
-                            self.model.isLoading = false
-                            self.collectionView.isUserInteractionEnabled = true
-                        }
-                    }
-                } */
-               //
             } else {
-                #if DEBUG
-                print("Loading Process")
-                #endif
+                if (indexPath.row + 1 == model.searchCharactersSJ.count) && (model.searchCharactersSJ.count < model.searchTotal) {
+                    print(model.searchCharactersSJ.count)
+                    loadData(limit: 10, offset: model.searchCharactersSJ.count, name: model.searchText)
+                }
             }
+        } else {
+            #if DEBUG
+            print("Loading Process")
+            #endif
         }
+    }
     
 }

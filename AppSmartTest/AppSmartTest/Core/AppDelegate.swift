@@ -12,12 +12,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var navController = UINavigationController()
-    private let network = NetworkMonitor()
+ //   private let network = NetworkMonitor()
+    var viewController = CharactersCollectionViewController()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
                 
-        let viewController = CharactersCollectionViewController()
+        //let viewController = CharactersCollectionViewController()
         navController = UINavigationController.init(rootViewController: viewController)
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navController
@@ -27,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    private func startNetworkMonitor() {
+    /*private func startNetworkMonitor() {
         if !network.getNetworkStatus() {
             DispatchQueue.main.async {
                 guard let navcontroller = self.navController.view else { return }
@@ -53,11 +54,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
-    }
+    } */
 
     func applicationWillResignActive(_ application: UIApplication) {
         
-        startNetworkMonitor()
+//        viewController.startNetworkMonitor()
+//        if !viewController.network.getNetworkStatus() {
+//            DispatchQueue.main.async {
+//                let errorMessage = ErrorMessage(view: self.navController.view)
+//                errorMessage.showError(reverse: true, message: "Offline Mode", delay: 3.0)
+//            }
+//        }
+        
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }

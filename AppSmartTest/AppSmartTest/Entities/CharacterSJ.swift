@@ -120,13 +120,9 @@ class CharacterSJ: Object {
 
     }
     
- /*   let urlsJSONs = json["urls"].arrayValue
-    self.urls = urlsJSONs.map { UrlSJ(from: $0) } */
+   // let urlsJSONs = json["urls"].arrayValue
+   // self.urls = urlsJSONs.map { UrlSJ(from: $0) }
 
-    
-
-    
-    
     override static func primaryKey() -> String? {
         return "id"
     }
@@ -145,7 +141,7 @@ class CharacterSJ: Object {
     }
 } */
 
-class ImageSJ {
+/*class ImageSJ {
 
     var fileExtension: String?
     var path: String?
@@ -156,4 +152,4 @@ class ImageSJ {
         self.path = json["path"].stringValue
     }
 
-}
+} */

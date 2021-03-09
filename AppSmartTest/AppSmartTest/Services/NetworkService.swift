@@ -24,37 +24,10 @@ class NetworkService {
         config.timeoutIntervalForRequest = 20
         //        config.urlCredentialStorage = nil
         //        config.timeoutIntervalForResource = 100
-        //        config.httpAdditionalHeaders = ["app-key" : "12345", "v" : "1"]
+        //        config.httpAdditionalHeaders = ["" : ""]
         let session = Alamofire.Session(configuration: config)
         return session
     }()
-    
-/*    func getCharactersSJ(limit: Int, offset: Int, completion: ((Swift.Result<ResponceSJ, Error>) -> Void)? = nil) {
-        urlConstructor.path = "/v1/public/characters"
-        let ts = Date().timeIntervalSince1970.description
-        let params: Parameters = [
-            "apikey": SessionKey.shared.publicKey,
-            "ts": ts,
-            "hash": (ts + SessionKey.shared.privateKey + SessionKey.shared.publicKey).md5(),
-            "orderBy": "name",
-            "limit" : limit,
-            "offset" : offset ]
-        
-        guard let url = urlConstructor.url else { return }
-        NetworkService.session.request(url, method: .get, parameters: params).responseJSON { response in
-            switch response.result {
-            case let .success(data):
-                let json = JSON(data)
-                let response = ResponceSJ(from: json)
-                  completion?(.success(response))
-            case let .failure(error):
-                completion?(.failure(error))
-                #if DEBUG
-                print(#function + " - Data load error: \(error)")
-                #endif
-            }
-        }
-    } */
     
     func getCharactersSJbyName(limit: Int, offset: Int, name: String? = nil, completion: ((Swift.Result<ResponceSJ, Error>) -> Void)? = nil) {
         

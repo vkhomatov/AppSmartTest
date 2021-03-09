@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class CharacterDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource /*, UITableViewDataSourcePrefetching */{
+class CharacterDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     public let model = CharacterDetailViewModel()
     private var headerView = CharacterDetailTableViewHeader()
@@ -23,44 +23,9 @@ class CharacterDetailViewController: UIViewController, UITableViewDelegate, UITa
         setCallbacks()
         
         if model.loadStorySJ.count == 0 {
-            
-            
             guard let id = self.model.characterSJ?.id else { return }
-
             loadData(id: id, storyType: self.model.activity, limit: 10, offset: 0)
-            //
-          /*  self.model.isLoading = true
-            let spinner = SpinnerView(frame: CGRect(x: self.tableView.frame.midX-55, y: self.headerView.frame.height + (self.tableView.frame.height - self.headerView.frame.height)/2, width: 110, height: 50))
-            self.view.addSubview(spinner)
-            spinner.start()
-            
-            guard let id = self.model.characterSJ?.id else { return }
-            self.model.loadCharacterStoriesSJ(id: id, storyType: model.activity, limit: 10, offset: 0) { [weak self] (message) in
-                guard let self = self else { return }
-                if let error = message {
-                    DispatchQueue.main.async {
-                        self.model.isLoading = false
-                        spinner.stop()
-                        spinner.removeFromSuperview()
-                        self.tableView.isUserInteractionEnabled = true
-                        guard let navcontroller = self.navigationController?.view else { return }
-                        let errorMessage = ErrorMessage(view: navcontroller)
-                        errorMessage.showError(reverse: true, message: error, delay: 3.0)
-                    }
-                } else {
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else { return }
-                        self.tableView.reloadData()
-                        spinner.stop()
-                        spinner.removeFromSuperview()
-                        self.model.isLoading = false
-                    }
-                }
-            } */
         }
-        //
-        
-        
     }
     
     private func loadHero() {
@@ -69,14 +34,11 @@ class CharacterDetailViewController: UIViewController, UITableViewDelegate, UITa
         self.title = characterSJ.name
         if model.characterSJ?.descriptionSJ != "" {
             headerView.info.text = characterSJ.descriptionSJ
-        } else {
-            headerView.info.isHidden = true
-        }
-
+        } else { headerView.info.isHidden = true }
+        
         if let url = model.createURL(fileExtension: characterSJ.fileExtension, path: characterSJ.path) {
             headerView.avatar.kf.setImage(with: url)
         }
-        
         
         model.activity = self.model.activity.getIndex(num: characterSJ.segment)
         switch  self.model.activity {
@@ -129,52 +91,11 @@ class CharacterDetailViewController: UIViewController, UITableViewDelegate, UITa
                 self.model.loadStorySJ = characterSJ.storiesSJ
             }
             
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            DispatchQueue.main.async { self.tableView.reloadData() }
             
             if self.model.loadStorySJ.count == 0 {
-                
                 guard let id = self.model.characterSJ?.id else { return }
-
                 self.loadData(id: id, storyType: self.model.activity, limit: 10, offset: self.model.loadStorySJ.count)
-                
-                
-                //
-             /*   self.model.isLoading = true
-                let spinner = SpinnerView(frame: CGRect(x: self.tableView.frame.midX-55, y: self.headerView.frame.height + (self.tableView.frame.height - self.headerView.frame.height)/2, width: 110, height: 50))
-                for cell in self.tableView.visibleCells { cell.layer.opacity = 0.2 }
-                self.tableView.isUserInteractionEnabled = false
-                self.view.addSubview(spinner)
-                spinner.start()
-                guard let id = self.model.characterSJ?.id else { return }
-                self.model.loadCharacterStoriesSJ(id: id, storyType: self.model.activity, limit: 10, offset: self.model.loadStorySJ.count) { [weak self] (message) in
-                    guard let self = self else { return }
-                    if let error = message {
-                        DispatchQueue.main.async {
-                            spinner.stop()
-                            spinner.removeFromSuperview()
-                            for cell in self.tableView.visibleCells { cell.layer.opacity = 1 }
-                            self.tableView.isUserInteractionEnabled = true
-                            self.model.isLoading = false
-                            
-                            guard let navcontroller = self.navigationController?.view else { return }
-                            let errorMessage = ErrorMessage(view: navcontroller)
-                            errorMessage.showError(reverse: true, message: error, delay: 3.0)
-                        }
-                    } else {
-                        DispatchQueue.main.async { [weak self] in
-                            guard let self = self else { return }
-                            self.tableView.reloadData()
-                            for cell in self.tableView.visibleCells { cell.layer.opacity = 1 }
-                            self.tableView.isUserInteractionEnabled = true
-                            spinner.stop()
-                            spinner.removeFromSuperview()
-                            self.model.isLoading = false
-                        }
-                    }
-                } */
-                //
             }
         }
     }
@@ -182,7 +103,6 @@ class CharacterDetailViewController: UIViewController, UITableViewDelegate, UITa
     
     
     private func loadData(id: Int, storyType: TypeOfStory, limit: Int, offset: Int) {
-        
         self.model.isLoading = true
         let spinner = SpinnerView(frame: CGRect(x: self.tableView.frame.midX-55, y: self.headerView.frame.height + (self.tableView.frame.height - self.headerView.frame.height)/2, width: 110, height: 50))
         for cell in tableView.visibleCells { cell.layer.opacity = 0.2 }
@@ -190,6 +110,7 @@ class CharacterDetailViewController: UIViewController, UITableViewDelegate, UITa
         view.addSubview(spinner)
         spinner.start()
         guard let id = self.model.characterSJ?.id else { return }
+        
         self.model.loadCharacterStoriesSJ(id: id, storyType: storyType, limit: limit, offset: offset) { [weak self] (message) in
             guard let self = self else { return }
             if let error = message {
@@ -215,9 +136,8 @@ class CharacterDetailViewController: UIViewController, UITableViewDelegate, UITa
                 }
             }
         }
-        
     }
-
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return model.loadStorySJ.count
@@ -256,48 +176,14 @@ class CharacterDetailViewController: UIViewController, UITableViewDelegate, UITa
         let contentYoffset = scrollView.contentOffset.y
         let distanceFromBottom = scrollView.contentSize.height - contentYoffset
         if distanceFromBottom < height {
-            
             if !self.firstTime {
                 if model.isLoading == false  {
-                    
                     guard let id = self.model.characterSJ?.id else { return }
-
                     loadData(id: id, storyType: self.model.activity, limit: 10, offset: self.model.loadStorySJ.count)
-                    
-                    //
-                   /* self.model.isLoading = true
-                    let spinner = SpinnerView(frame: CGRect(x: self.tableView.frame.midX-55, y: self.headerView.frame.height + (self.tableView.frame.height - self.headerView.frame.height)/2, width: 110, height: 50))
-                    for cell in tableView.visibleCells { cell.layer.opacity = 0.2 }
-                    tableView.isUserInteractionEnabled = false
-                    view.addSubview(spinner)
-                    spinner.start()
-                    guard let id = self.model.characterSJ?.id else { return }
-                    self.model.loadCharacterStoriesSJ(id: id, storyType: self.model.activity, limit: 10, offset: self.model.loadStorySJ.count) { [weak self] (message) in
-                        guard let self = self else { return }
-                        if let error = message {
-                            DispatchQueue.main.async {
-                                spinner.stop()
-                                spinner.removeFromSuperview()
-                                for cell in self.tableView.visibleCells { cell.layer.opacity = 1 }
-                                self.tableView.isUserInteractionEnabled = true
-                                self.model.isLoading = false
-                                guard let navcontroller = self.navigationController?.view else { return }
-                                let errorMessage = ErrorMessage(view: navcontroller)
-                                errorMessage.showError(reverse: true, message: error, delay: 3.0)
-                            }
-                        } else {
-                            DispatchQueue.main.async { [weak self] in
-                                guard let self = self else { return }
-                                self.tableView.reloadData()
-                                spinner.stop()
-                                spinner.removeFromSuperview()
-                                for cell in self.tableView.visibleCells { cell.layer.opacity = 1 }
-                                self.tableView.isUserInteractionEnabled = true
-                                self.model.isLoading = false
-                            }
-                        }
-                    } */
-                    //
+                } else {
+                    #if DEBUG
+                    print("Loading Process")
+                    #endif
                 }
             }
             self.firstTime = false

@@ -67,14 +67,3 @@ class ComicsSJ: Object, AnyStoryProtocol {
         self.path = json["thumbnail"]["path"].stringValue
     }
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class SpinnerView: UIView {
 
     private lazy var messageLabel: UILabel = {
