@@ -11,14 +11,23 @@ Second screen should contain additional information about the chosen character o
 Design of screens is not so important, you can create it by your vision.
 After finishing you should upload the project to GitHub (or GitLab/Bitbucket).
 Optional:
+
 1. Add search characters by character names using API (use UISearchController for it).
-2. Write tests for your code.
+
+3. Write tests for your code.
+
 Requirements:
+
 ● Swift as a development language.
+
 ● You can use any architecture of application, but please be sure that application
 features can be extended or changed in the future without huge refactoring.
+
 ● Use Realm database for saving data from the backend and fetching data for
 displaying.
+
 ● The minimum iOS version is 12.0.
+
 ● You can use popular dependencies and any package managers.
+
 ● You can be free to show your knowledge.
