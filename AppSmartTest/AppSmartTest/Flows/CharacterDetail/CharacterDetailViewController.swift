@@ -40,6 +40,9 @@ class CharacterDetailViewController: UIViewController, UITableViewDelegate, UITa
             headerView.avatar.kf.setImage(with: url)
         }
         
+      //  model.activity = TypeOfStory(rawValue: "comics")!
+
+        
         model.activity = self.model.activity.getIndex(num: characterSJ.segment)
         switch  self.model.activity {
         case .comics:

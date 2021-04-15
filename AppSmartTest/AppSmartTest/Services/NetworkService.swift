@@ -57,6 +57,9 @@ class NetworkService {
         }
         
         guard let url = urlConstructor.url else { return }
+        
+        print(url)
+        
         NetworkService.session.request(url, method: .get, parameters: params).responseJSON { response in
             switch response.result {
             case let .success(data):

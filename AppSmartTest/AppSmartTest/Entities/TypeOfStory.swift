@@ -9,6 +9,7 @@ import Foundation
 
 enum TypeOfStory: String, CaseIterable {
     case comics = "comics", events = "events", series = "series", stories = "stories"
+
     func getIndex(num: Int)  -> TypeOfStory  {
         switch num {
         case 0:
